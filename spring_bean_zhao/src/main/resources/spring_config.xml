@@ -8,15 +8,12 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context.xsd">
    
-    <!-- 注册工厂 -->
-    <bean id="factory1" class="com.kaikeba.util.TeacherFactory"></bean>
-    <bean id="factory2" class="com.kaikeba.util.TeacherFactory2"></bean>
+    
    <!-- 
          Spring容器，当前teacher类的实例化操作，由动态工厂
     -->
     <bean id="teacher" 
-         class="com.kaikeba.beans.Teacher"
-         factory-bean="factory2"
+         class="com.kaikeba.util.TeacherFactory"     
          factory-method="createTeacher">
          
     </bean>
