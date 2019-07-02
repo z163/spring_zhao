@@ -4,6 +4,15 @@ public class BeanDefined {
 	
 	private String beanId;
 	private String classPath;
+	private String scope ="singleton";
+
+
+	public String getScope() {
+		return scope;
+	}
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
 	public String getBeanId() {
 		return beanId;
 	}
