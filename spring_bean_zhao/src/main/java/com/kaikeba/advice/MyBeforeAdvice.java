@@ -2,6 +2,7 @@ package com.kaikeba.advice;
 
 import java.lang.reflect.Method;
 
+import org.springframework.aop.Advisor;
 import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.aop.framework.ProxyFactoryBean;
 /*
@@ -30,7 +31,7 @@ public class MyBeforeAdvice implements MethodBeforeAdvice {
 	//切面：次要业务
 	public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable {
 		System.out.println("-----洗手-----");
-        ProxyFactoryBean cc; 
+        
 	}
 
 }

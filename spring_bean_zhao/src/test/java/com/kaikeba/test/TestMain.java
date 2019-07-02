@@ -16,8 +16,9 @@ public class TestMain {
 		ApplicationContext factory = new ClassPathXmlApplicationContext("spring_config.xml");
 
 		BaseService personProxy = (BaseService) factory.getBean("personProxy");
-		personProxy.eat();// 洗手  吃饭
-		personProxy.wc(); //  上厕所
+
+		personProxy.eat();//洗手  吃饭
+		personProxy.wc();// wc
 
 	}
 
