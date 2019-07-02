@@ -8,7 +8,6 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-
     <bean id="teacher" class="com.kaikeba.beans.Teacher">
            <property name="tname" value="Mr liu"></property>
     </bean>
@@ -18,6 +17,5 @@
       <property name="age" value="22"></property>
       <property name="teacher" ref="teacher"></property>
     </bean>
-
 
 </beans>

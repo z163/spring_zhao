@@ -7,13 +7,17 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.kaikeba.beans.Student;
 import com.kaikeba.beans.Teacher;
 
+
 public class TestMain {
 
 	public static void main(String[] args) {
 		
 		ApplicationContext factory = new ClassPathXmlApplicationContext("spring_config.xml");
-		Teacher t = (Teacher)factory.getBean("teacher");
-		System.out.println("t="+t);
+
+		Student stu = (Student)factory.getBean("student");
+		System.out.println(stu.getSname()+" "+stu.getAge());
+		System.out.println(stu.getTeacher().getTname());
+
 
 	}
 
