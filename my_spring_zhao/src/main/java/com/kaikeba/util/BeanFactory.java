@@ -1,9 +1,14 @@
 package com.kaikeba.util;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class BeanFactory {
 
@@ -18,8 +23,45 @@ public class BeanFactory {
 		return beanDefinedList;
 	}
 
-	
-	
+	//依赖注入
+	public void setValue(Object instance,Class classFile,Map propertyMap) throws NoSuchFieldException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		     //循环便利  propertyMap<属性名,属性值> 
+		     Method methodArray[]= classFile.getDeclaredMethods();
+		     Set fieldNameSet = propertyMap.keySet();
+		     Iterator fieldIterator = fieldNameSet.iterator();
+		     while(fieldIterator.hasNext()){
+		    	 String fieldName = (String) fieldIterator.next();
+		    	 String value = (String) propertyMap.get(fieldName);
+		    	 Field fieldObj = classFile.getDeclaredField(fieldName);//同名属性对象
+		    	 for(int i=0;i<methodArray.length;i++){
+		    		 Method methodObj  = methodArray[i];
+		    		 String methodName ="set"+fieldName;// sid == setsid
+		    		 if(methodName.equalsIgnoreCase(methodObj.getName())){
+		    			   Class fieldType=   fieldObj.getType();//属性的数据类型 Integer,String,Double,boolean,list
+		    		       if(fieldType == String.class){
+		    		    	   methodObj.invoke(instance, value);
+		    		       }else if(fieldType == Integer.class){
+		    		    	   methodObj.invoke(instance, Integer.valueOf(value));
+		    		       }else if(fieldType == Boolean.class){
+		    		    	   methodObj.invoke(instance, Boolean.valueOf(value));
+		    		       }else if(fieldType==List.class){
+		    		    	     List tempList = new ArrayList();
+		    		    	     String dataArray[]=value.split(",");
+		    		    	     for(int j=0;j<dataArray.length;j++){
+		    		    	    	 tempList.add(dataArray[j]);
+		    		    	     }
+		    		    	     methodObj.invoke(instance, tempList);
+		    		       }else{ //此时属性类型是数组
+		    		    	   String dataArray[]=value.split(",");
+		    		    	   Object data[] = new Object[1];
+		    		    	   data[0]=dataArray;
+		    		    	   methodObj.invoke(instance, data);
+		    		       }
+		    		          break;
+		    		 }
+		    	 }
+		     }
+	}
 	
 	public BeanFactory(List<BeanDefined> beanDefinedList) throws Exception {
 		
@@ -66,6 +108,7 @@ public class BeanFactory {
 					 String scope=beanObj.getScope();
 					 String factoryBean = beanObj.getFactoryBean();
 					 String factoryMehtod=beanObj.getFactoryMethod();
+					 Map propertyMap = beanObj.getPropertyMap();
 					 if("prototype".equals(scope)){//.getBean每次都要返回一个全新实例对象
 						  
 						  if(factoryBean!=null && factoryMehtod!=null){//用户希望使用指定工厂创建实例对象
@@ -84,10 +127,13 @@ public class BeanFactory {
 					 if(this.processorObj!=null){
 						 proxyObj = this.processorObj.postProcessBeforeInitialization(instance, beanId);
 						 //实例对象初始化。Spring依赖注入
+						 setValue(instance,classFile,propertyMap);
 						 proxyObj = this.processorObj.postProcessAfterInitialization(instance, beanId);
 						 //此时返回proxyObj可能就是原始bean对象，也有可能就是代理对象
 						 return proxyObj;
 					 }else{
+						 //实例对象初始化
+						 setValue(instance,classFile,propertyMap);
 						 return instance;
 					 }
 					 

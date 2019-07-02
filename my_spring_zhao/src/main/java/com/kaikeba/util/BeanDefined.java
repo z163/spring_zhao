@@ -1,5 +1,8 @@
 package com.kaikeba.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BeanDefined {
 	/*
 	 * 
@@ -11,10 +14,17 @@ public class BeanDefined {
 	private String scope ="singleton";
 	private String factoryBean=null;
 	private String factoryMethod=null;
+	private Map<String,String> propertyMap=new HashMap();
 	
 	
 	
 	
+	public Map<String, String> getPropertyMap() {
+		return propertyMap;
+	}
+	public void setPropertyMap(Map<String, String> propertyMap) {
+		this.propertyMap = propertyMap;
+	}
 	public String getFactoryBean() {
 		return factoryBean;
 	}

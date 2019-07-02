@@ -2,6 +2,7 @@ package com.kaikeba.test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.kaikeba.beans.Teacher;
 import com.kaikeba.util.BeanDefined;
@@ -17,17 +18,19 @@ public class TestMain {
 		  BeanDefined beanObj = new BeanDefined();
 		  beanObj.setBeanId("teacher");
 		  beanObj.setClassPath("com.kaikeba.beans.Teacher");
-		  beanObj.setFactoryBean("factory1");
-		  beanObj.setFactoryMethod("createTeacher");
-		  beanObj.setScope("prototype");
-		  
-		  BeanDefined beanObj2 = new BeanDefined();
-		  beanObj2.setBeanId("factory1");
-		  beanObj2.setClassPath("com.kaikeba.beans.TeacherFactory");
+
+		  /*
+		   *  <property>
+		   * 
+		   **/
+		  Map<String, String> propertyMap =  beanObj.getPropertyMap();
+		  propertyMap.put("teacherName", "李老师");
+		  propertyMap.put("friendArray", "老刘,老孙,小师妹");
+		  propertyMap.put("school", "清华一小,北京理工大学");
 		  
 		  List configuration = new ArrayList();
 		  configuration.add(beanObj);//spring核心配置
-		  configuration.add(beanObj2);
+		
 		  
 		  //2.声明一个Spring提供BeanFacotory
 		  BeanFactory factory = new BeanFactory(configuration);
@@ -36,6 +39,9 @@ public class TestMain {
 		  //3.开发人员向BeanFactory索要实例对象.
 		  Teacher t= (Teacher) factory.getBean("teacher");
 		  System.out.println("t="+t);
+		  System.out.println(t.getTeacherName());
+		  System.out.println(t.getSchool());
+
 		 
 
 	}
