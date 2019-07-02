@@ -10,12 +10,32 @@
 
 
 
+
     
     <bean id="student" class="com.kaikeba.beans.Student">
       <property name="sname" value="mike"></property>
       <property name="age" value="22"></property>
       <property name="teacher" ref="teacher"></property>
     </bean>
+
+   
+       <!-- 注册被监控实现类 -->
+       <bean id="person" class="com.kaikeba.serviceImpl.Person"></bean>
+       
+       <!-- 注册通知实现类 -->
+       <bean id="before" class="com.kaikeba.advice.MyBeforeAdvice"></bean>
+       
+       <!-- 注册代理监控对象生产工厂 -->
+       <bean id="personProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+           <property name="target" ref="person"></property>
+           <property name="interceptorNames" >
+               <array>
+                  <value>before</value>
+               </array>
+           </property>
+       </bean>
+  
+>>>>>>> 396566e... aop advice
 
    
         <bean id="teacher" class="com.kaikeba.beans.Teacher">
