@@ -12,11 +12,9 @@ import java.util.Set;
 
 public class BeanFactory {
 
-
 	private List<BeanDefined> beanDefinedList;
 	private Map<String ,Object> SpringIoc;//已经创建好实例对象
 	private BeanPostProcessor processorObj;//后置对象
-	   
 
 
 	public List<BeanDefined> getBeanDefinedList() {
@@ -128,11 +126,11 @@ public class BeanFactory {
 						 proxyObj = this.processorObj.postProcessBeforeInitialization(instance, beanId);
 						 //实例对象初始化。Spring依赖注入
 						 setValue(instance,classFile,propertyMap);
+
 						 proxyObj = this.processorObj.postProcessAfterInitialization(instance, beanId);
 						 //此时返回proxyObj可能就是原始bean对象，也有可能就是代理对象
 						 return proxyObj;
 					 }else{
-						 //实例对象初始化
 						 setValue(instance,classFile,propertyMap);
 						 return instance;
 					 }

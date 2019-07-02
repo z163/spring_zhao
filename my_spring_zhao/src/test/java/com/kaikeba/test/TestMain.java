@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kaikeba.beans.Teacher;
+import com.kaikeba.service.BaseService;
 import com.kaikeba.util.BeanDefined;
 import com.kaikeba.util.BeanFactory;
 
@@ -16,33 +17,26 @@ public class TestMain {
 		
 		  
 		  BeanDefined beanObj = new BeanDefined();
-		  beanObj.setBeanId("teacher");
-		  beanObj.setClassPath("com.kaikeba.beans.Teacher");
 
-		  /*
-		   *  <property>
-		   * 
-		   **/
-		  Map<String, String> propertyMap =  beanObj.getPropertyMap();
-		  propertyMap.put("teacherName", "李老师");
-		  propertyMap.put("friendArray", "老刘,老孙,小师妹");
-		  propertyMap.put("school", "清华一小,北京理工大学");
+		  beanObj.setBeanId("isomeService");
+		  beanObj.setClassPath("com.kaikeba.serviceImpl.ISomeService");
+		 
+		  
+		  BeanDefined beanObj2 = new BeanDefined();		
+		  beanObj2.setClassPath("com.kaikeba.util.MyBeanPostProcessor");
 		  
 		  List configuration = new ArrayList();
 		  configuration.add(beanObj);//spring核心配置
-		
+		  configuration.add(beanObj2);
 		  
 		  //2.声明一个Spring提供BeanFacotory
 		  BeanFactory factory = new BeanFactory(configuration);
 		 
 		  
 		  //3.开发人员向BeanFactory索要实例对象.
-		  Teacher t= (Teacher) factory.getBean("teacher");
+		  BaseService t= (BaseService) factory.getBean("isomeService");
 		  System.out.println("t="+t);
-		  System.out.println(t.getTeacherName());
-		  System.out.println(t.getSchool());
-
-		 
+		  System.out.println(t.doSome());//HELLO MIKE
 
 	}
 
