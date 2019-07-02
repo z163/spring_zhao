@@ -1,12 +1,32 @@
 package com.kaikeba.util;
 
 public class BeanDefined {
-	
+	/*
+	 * 
+	 *   
+	 *   <bean id  ,class,  scope.factory-bean,factory-method>
+	 **/
 	private String beanId;
 	private String classPath;
 	private String scope ="singleton";
-
-
+	private String factoryBean=null;
+	private String factoryMethod=null;
+	
+	
+	
+	
+	public String getFactoryBean() {
+		return factoryBean;
+	}
+	public void setFactoryBean(String factoryBean) {
+		this.factoryBean = factoryBean;
+	}
+	public String getFactoryMethod() {
+		return factoryMethod;
+	}
+	public void setFactoryMethod(String factoryMethod) {
+		this.factoryMethod = factoryMethod;
+	}
 	public String getScope() {
 		return scope;
 	}
