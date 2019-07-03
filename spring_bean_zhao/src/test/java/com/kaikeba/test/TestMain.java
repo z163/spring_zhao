@@ -17,7 +17,7 @@ public class TestMain {
 
 		Student stu = (Student)factory.getBean("student");
 		System.out.println(stu.getSname()+" "+stu.getAge());
-		System.out.println(stu.getTeacher().getTname());
+		System.out.println(stu.getTeacher().getTeacherName());
 
 		Teacher teacher = (Teacher) factory.getBean("teacher");
 		System.out.println(teacher.getTeacherName());
